@@ -15,17 +15,25 @@ cap = cv2.VideoCapture(0)
 # Data will hold rows of [label, hand0_x0, hand0_y0, ..., hand0_x20, hand0_y20, hand1_x0, hand1_y0, ..., hand1_x20, hand1_y20].
 data = []
 
+debug = 1
+
 while True:
-    label = input("Enter label for this gesture (or 'exit' to stop): ")
-    if label.lower() == 'exit':
-        break
+    label = None
+    if not debug:
+        label = input("Enter label for this gesture (or 'exit' to stop): ")
+        if label.lower() == 'exit':
+            break
+
+    if debug:
+        label = "0"
 
     # Create a folder for the label if it doesn't exist.
     folder_path = f"dataset/{label}"
     os.makedirs(folder_path, exist_ok=True)
 
-    print("Prepare for the gesture. Starting in 10 seconds...")
-    time.sleep(10)
+    if not debug:
+        print("Prepare for the gesture. Starting in 10 seconds...")
+        time.sleep(10)
 
     count = 0
     while count < 100:
@@ -65,17 +73,19 @@ while True:
                 key=lambda hand: min(lm.x for lm in hand.landmark)
             )
 
-            # Draw the 21 landmark coordinates for the extreme left hand.
-            start_y = 20  # Vertical starting position for text.
-            for idx, lm in enumerate(extreme_left_hand.landmark):
-                text = f"Point {idx}: x: {lm.x:.2f}, y: {lm.y:.2f}"
 
-                cv2.putText(frame, text, (10, start_y + idx * 20),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), 1, cv2.LINE_AA)
-                cv2.putText(frame, text, (10, start_y + idx * 20),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 1, cv2.LINE_AA)
+            if debug:
+                # Draw the 21 landmark coordinates for the extreme left hand.
+                start_y = 20  # Vertical starting position for text.
+                for idx, lm in enumerate(extreme_left_hand.landmark):
+                    text = f"Point {idx}: x: {lm.x:.2f}, y: {lm.y:.2f}"
 
-            # ---------------------------------------------------------------
+                    cv2.putText(frame, text, (10, start_y + idx * 20),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), 1, cv2.LINE_AA)
+                    cv2.putText(frame, text, (10, start_y + idx * 20),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 1, cv2.LINE_AA)
+
+                # ---------------------------------------------------------------
 
             # Save the annotated frame (with overlays) to disk.
             img_path = os.path.join(folder_path, f"{count}.jpg")
