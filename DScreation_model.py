@@ -73,7 +73,7 @@ while True:
                 key=lambda hand: min(lm.x for lm in hand.landmark)
             )
 
-
+            # Text Rendering.
             if debug:
                 # Draw the 21 landmark coordinates for the extreme left hand.
                 start_y = 20  # Vertical starting position for text.
