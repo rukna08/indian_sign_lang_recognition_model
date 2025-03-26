@@ -14,7 +14,11 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
-labels_dict = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 'A': 'A', 'B': 'B', 'C': 'C', 'D': 'D', 'E': 'E', 'F': 'F', 'G': 'G', 'H': 'H', 'I': 'I', 'J': 'J', 'K': 'K', 'L': 'L','M': 'M', 'N': 'N', 'O': 'O', 'P': 'P', 'Q': 'Q', 'R': 'R', 'S': 'S', 'T': 'T', 'U': 'U', 'V': 'V', 'W': 'W', 'X': 'X', 'Y': 'Y', 'Z': 'Z', 'SPACE': 'SPACE', 'NEXT': 'NEXT', 'DONE': 'DONE'}  # Update with actual labels
+labels_dict = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9',
+               'A': 'A', 'B': 'B', 'C': 'C', 'D': 'D', 'E': 'E', 'F': 'F', 'G': 'G', 'H': 'H',
+               'I': 'I', 'J': 'J', 'K': 'K', 'L': 'L','M': 'M', 'N': 'N', 'O': 'O', 'P': 'P',
+               'Q': 'Q', 'R': 'R', 'S': 'S', 'T': 'T', 'U': 'U', 'V': 'V', 'W': 'W', 'X': 'X',
+               'Y': 'Y', 'Z': 'Z', 'SPACE': 'SPACE', 'NEXT': 'NEXT', 'DONE': 'DONE'}  # Update with actual labels
 
 while True:
     data_aux = []
@@ -29,7 +33,6 @@ while True:
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(frame_rgb)
 
-# This is a test comment.
 
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
